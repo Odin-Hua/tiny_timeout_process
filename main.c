@@ -21,26 +21,22 @@ int main()
         if (flag == 0) {
             /*timeout*/
             gettimeofday(&tval, NULL);
-            unit_timeout_event_add(0x01, TIMEOUT_SEC_0_5, callback);
-            unit_timeout_event_add(0x02, TIMEOUT_SEC_1_0, callback);
-            unit_timeout_event_add(0x04, TIMEOUT_SEC_0_5, callback);
-            unit_timeout_event_add(0x05, TIMEOUT_SEC_1_0, callback);
-            unit_timeout_event_add(0x07, TIMEOUT_SEC_0_5, callback);
-            unit_timeout_event_add(0x08, TIMEOUT_SEC_1_0, callback);
+            unit_timeout_event_add(TIMEOUT_ID_1, TIMEOUT_SEC_0_5, callback);
+            unit_timeout_event_add(TIMEOUT_ID_2, TIMEOUT_SEC_1_0, callback);
             gettimeofday(&tval, NULL);
             flag = 1;
         }
         if (flag == 1) {
             /*not timeout*/
-            unit_timeout_event_add(0xf1, TIMEOUT_SEC_0_5, callback);
-            unit_timeout_event_add(0xf2, TIMEOUT_SEC_1_0, callback);
+            unit_timeout_event_add(TIMEOUT_ID_3, TIMEOUT_SEC_0_5, callback);
+            unit_timeout_event_add(TIMEOUT_ID_4, TIMEOUT_SEC_1_0, callback);
             flag = 2;
         }
         if (flag == 2) {
             usleep(400*1000);
-            unit_timeout_event_delete(0xf1);
+            unit_timeout_event_delete(TIMEOUT_ID_3);
             usleep(400*1000);
-            unit_timeout_event_delete(0xf2);
+            unit_timeout_event_delete(TIMEOUT_ID_4);
             sleep(3);
             flag = 0;
             printf("\n====================\n");
